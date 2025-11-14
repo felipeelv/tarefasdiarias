@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Minha Agenda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13c8ec",
+              "background-light": "#f6f8f8",
+              "background-dark": "#101f22",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+      .active-icon {
+        background-color: #13c8ec;
+        color: white;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-gray-800 dark:text-gray-200" style="font-size: 28px;">menu</span>
+</div>
+<h1 class="text-gray-800 dark:text-gray-200 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Minha Agenda</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-gray-800 dark:text-gray-200 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<!-- Segmented Controls and View Toggles -->
+<div class="flex items-center gap-4 px-4 py-3">
+<div class="flex h-10 flex-1 items-center justify-center rounded-lg bg-gray-200/60 dark:bg-gray-800/60 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-gray-900 dark:has-[:checked]:text-white text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Dia</span>
+<input class="invisible w-0" name="view-period" type="radio" value="Dia"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-gray-900 dark:has-[:checked]:text-white text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal transition-colors">
+<span class="truncate">Semana</span>
+<input checked="" class="invisible w-0" name="view-period" type="radio" value="Semana"/>
+</label>
+</div>
+<div class="flex items-center justify-center gap-2">
+<button class="flex size-10 items-center justify-center rounded-lg bg-gray-200/60 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined" style="font-size: 22px;">view_list</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-lg active-icon">
+<span class="material-symbols-outlined" style="font-size: 22px;">calendar_month</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 p-4 pt-1 overflow-x-auto">
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 pl-4 pr-2">
+<p class="text-primary text-sm font-medium leading-normal">Todas as Listas</p>
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">arrow_drop_down</span>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200/60 dark:bg-gray-800/60 pl-4 pr-2">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Trabalho</p>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200/60 dark:bg-gray-800/60 pl-4 pr-2">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Pessoal</p>
+</button>
+<button class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200/60 dark:bg-gray-800/60 pl-4 pr-2">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Estudos</p>
+</button>
+</div>
+<!-- Calendar Picker View -->
+<main class="flex flex-col gap-4 p-4">
+<div class="flex min-w-72 flex-1 flex-col gap-0.5">
+<div class="flex items-center p-1 justify-between">
+<button>
+<div class="text-gray-800 dark:text-gray-200 flex size-10 items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_left</span>
+</div>
+</button>
+<p class="text-gray-800 dark:text-gray-200 text-base font-bold leading-tight flex-1 text-center">Agosto 2024</p>
+<button>
+<div class="text-gray-800 dark:text-gray-200 flex size-10 items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+</div>
+</button>
+</div>
+<div class="grid grid-cols-7">
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">D</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">S</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">T</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">Q</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">Q</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">S</p>
+<p class="text-gray-500 dark:text-gray-400 text-[13px] font-bold leading-normal flex h-12 w-full items-center justify-center pb-0.5">S</p>
+<button class="h-12 w-full text-gray-400 dark:text-gray-600 col-start-5 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">1</div></button>
+<button class="h-12 w-full text-gray-400 dark:text-gray-600 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">2</div></button>
+<button class="h-12 w-full text-gray-400 dark:text-gray-600 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">3</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">4</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal relative"><div class="flex size-full items-center justify-center rounded-full">5</div><div class="absolute bottom-2 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-blue-400"></div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">6</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">7</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">8</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">9</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">10</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">11</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">12</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal relative"><div class="flex size-full items-center justify-center rounded-full">13</div><div class="absolute bottom-2 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-green-400"></div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">14</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">15</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">16</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">17</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">18</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">19</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal relative"><div class="flex size-full items-center justify-center rounded-full">20</div><div class="absolute bottom-2 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full bg-yellow-400"></div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">21</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">22</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">23</div></button>
+<button class="h-12 w-full text-white text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full bg-primary">24</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">25</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">26</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">27</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">28</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">29</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">30</div></button>
+<button class="h-12 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal"><div class="flex size-full items-center justify-center rounded-full">31</div></button>
+</div>
+</div>
+<!-- Tasks for selected day -->
+<div class="flex flex-col gap-3">
+<h3 class="text-gray-800 dark:text-gray-200 text-lg font-bold leading-tight tracking-[-0.015em] px-0 pb-1 pt-2">Hoje, 24 de Agosto</h3>
+<!-- Task Card -->
+<div class="flex items-start gap-4 rounded-xl bg-white dark:bg-gray-800 p-4 shadow-sm">
+<button class="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 border-primary">
+<span class="material-symbols-outlined text-primary text-base hidden">check</span>
+</button>
+<div class="flex flex-col gap-1">
+<p class="text-gray-800 dark:text-gray-100 font-medium">Reunião de alinhamento com a equipe</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm">10:00 - 11:00</p>
+<div class="flex pt-1">
+<span class="text-xs font-medium text-blue-800 bg-blue-100 dark:bg-blue-900/50 dark:text-blue-300 px-2 py-0.5 rounded-full">Trabalho</span>
+</div>
+</div>
+</div>
+<!-- Task Card - Completed -->
+<div class="flex items-start gap-4 rounded-xl bg-white dark:bg-gray-800 p-4 shadow-sm opacity-60">
+<button class="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 border-gray-400 bg-gray-400">
+<span class="material-symbols-outlined text-white text-base">check</span>
+</button>
+<div class="flex flex-col gap-1">
+<p class="text-gray-800 dark:text-gray-100 font-medium line-through">Finalizar relatório mensal</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm line-through">14:00</p>
+<div class="flex pt-1">
+<span class="text-xs font-medium text-blue-800 bg-blue-100 dark:bg-blue-900/50 dark:text-blue-300 px-2 py-0.5 rounded-full">Trabalho</span>
+</div>
+</div>
+</div>
+<!-- Task Card -->
+<div class="flex items-start gap-4 rounded-xl bg-white dark:bg-gray-800 p-4 shadow-sm">
+<button class="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 border-primary">
+<span class="material-symbols-outlined text-primary text-base hidden">check</span>
+</button>
+<div class="flex flex-col gap-1">
+<p class="text-gray-800 dark:text-gray-100 font-medium">Consulta com dentista</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm">16:30</p>
+<div class="flex pt-1">
+<span class="text-xs font-medium text-green-800 bg-green-100 dark:bg-green-900/50 dark:text-green-300 px-2 py-0.5 rounded-full">Pessoal</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg">
+<span class="material-symbols-outlined" style="font-size: 28px;">add</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13c8ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101f22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-10 flex h-16 items-center border-b border-zinc-200/50 dark:border-zinc-800/50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm px-4">
+<button class="flex size-10 shrink-0 items-center justify-center text-zinc-800 dark:text-zinc-200">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-bold text-zinc-900 dark:text-zinc-100">Configurações</h1>
+<div class="size-10 shrink-0"></div> <!-- Spacer -->
+</header>
+<main class="flex-1 flex-col pb-10">
+<!-- Profile Section -->
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 py-6">
+<div class="flex items-center gap-4 flex-1">
+<img class="aspect-square rounded-full h-16 w-16 bg-zinc-200 dark:bg-zinc-700" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2wxBD4veHAiRVGqVbzMGH8GElkKhXl1P0lfyI6pk5E6pm7MXjdvIGZ_eDO8D4Zy4C0bfVO-grsF_UO6eZAXCGqTOV3FJmz5ylN5KKFnIEQeJ-rqJDL2JJNBxKFdM04fr4Po7cl2e5PPPILAvEcXRaDbpXeWr1vh0b1q2kI5gI4mLySaVMTQbZ9a4PZ9IYUgjKvYfIY-diVOcqadHwntOc9H1ZTl5G4pe0pu-ou0hK9deWOU3bArJfD3Qhx1BeuWnc4qceaCZu7QZ3"/>
+<div class="flex flex-col justify-center">
+<p class="text-zinc-900 dark:text-zinc-100 text-lg font-medium leading-normal line-clamp-1">Bruno Fernandes</p>
+<p class="text-zinc-500 dark:text-zinc-400 text-sm font-normal leading-normal line-clamp-2">bruno.fernandes@email.com</p>
+</div>
+</div>
+<button class="shrink-0 flex size-10 items-center justify-center text-zinc-800 dark:text-zinc-200">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<!-- Account Section -->
+<h3 class="text-zinc-900 dark:text-zinc-100 text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Conta</h3>
+<div class="flex flex-col">
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Gerenciar Perfil</p>
+</div>
+<div class="shrink-0">
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Alterar Senha</p>
+</div>
+<div class="shrink-0">
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">workspace_premium</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Gerenciamento de Assinatura</p>
+</div>
+<div class="shrink-0">
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Appearance Section -->
+<div class="my-2 h-px bg-zinc-200 dark:bg-zinc-800/50 mx-4"></div>
+<h3 class="text-zinc-900 dark:text-zinc-100 text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Aparência</h3>
+<div class="flex flex-col">
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">dark_mode</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Modo Escuro</p>
+</div>
+<div class="shrink-0">
+<label class="relative inline-flex cursor-pointer items-center">
+<input class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-zinc-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-zinc-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-zinc-600 dark:bg-zinc-700"></div>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">language</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Idioma</p>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<span class="text-zinc-500 dark:text-zinc-400 text-base">Português</span>
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Notifications Section -->
+<div class="my-2 h-px bg-zinc-200 dark:bg-zinc-800/50 mx-4"></div>
+<h3 class="text-zinc-900 dark:text-zinc-100 text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Notificações</h3>
+<div class="flex flex-col">
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">notifications</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Notificações Push</p>
+</div>
+<div class="shrink-0">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-zinc-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-zinc-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-zinc-600 dark:bg-zinc-700"></div>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Notificações por E-mail</p>
+</div>
+<div class="shrink-0">
+<label class="relative inline-flex cursor-pointer items-center">
+<input checked="" class="peer sr-only" type="checkbox" value=""/>
+<div class="peer h-6 w-11 rounded-full bg-zinc-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-zinc-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-zinc-600 dark:bg-zinc-700"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- General Section -->
+<div class="my-2 h-px bg-zinc-200 dark:bg-zinc-800/50 mx-4"></div>
+<h3 class="text-zinc-900 dark:text-zinc-100 text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Geral</h3>
+<div class="flex flex-col">
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">help</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Ajuda &amp; Suporte</p>
+</div>
+<div class="shrink-0">
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">privacy_tip</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Política de Privacidade</p>
+</div>
+<div class="shrink-0">
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4 flex-1">
+<div class="text-zinc-800 dark:text-zinc-200 flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-10">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<p class="text-zinc-900 dark:text-zinc-100 text-base font-normal leading-normal flex-1 truncate">Termos de Serviço</p>
+</div>
+<div class="shrink-0">
+<div class="text-zinc-500 dark:text-zinc-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Account Actions -->
+<div class="mt-8 px-4 flex flex-col gap-4">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-background-light dark:bg-zinc-800 px-4 py-3 text-base font-semibold text-zinc-900 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700">
+<span class="material-symbols-outlined">logout</span>
+                    Sair
+                </button>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-transparent px-4 py-3 text-base font-semibold text-red-500 dark:text-red-400">
+<span class="material-symbols-outlined">delete_forever</span>
+                    Excluir Conta
+                </button>
+</div>
+</main>
+</div>
+</body></html>

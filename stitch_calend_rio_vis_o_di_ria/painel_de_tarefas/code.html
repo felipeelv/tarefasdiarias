@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gerenciador de Tarefas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#EA2831", "background-light": "#f8f6f6", "background-dark": "#211111", "column-light": "#ebeef0", "column-dark": "#182a2e", "text-main-light": "#0d191b", "text-main-dark": "#e1e3e3", "text-secondary-light": "#4c8d9a", "text-secondary-dark": "#9cb0b4", "card-light": "#f8fbfc", "card-dark": "#203438", "border-light": "#cfe3e7", "border-dark": "#2f4a50"}, fontFamily: {display: "Inter"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}}}};</script>
+<style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main-light dark:text-text-main-dark">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Top App Bar -->
+<header class="flex shrink-0 items-center justify-between border-b border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark p-4">
+<h1 class="text-xl font-bold tracking-tight">Tarefas Diárias</h1>
+<div class="flex items-center gap-2">
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-text-main-light dark:text-text-main-dark">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-text-main-light dark:text-text-main-dark">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</div>
+</header>
+<!-- Kanban Board Container -->
+<main class="flex-1 overflow-x-auto overflow-y-hidden">
+<div class="flex h-full w-max min-w-full space-x-4 p-4">
+<!-- Column: A fazer -->
+<div class="flex w-80 shrink-0 flex-col rounded-xl bg-column-light dark:bg-column-dark">
+<h2 class="px-4 pb-2 pt-4 text-base font-bold leading-tight tracking-[-0.015em]">A fazer (2)</h2>
+<div class="flex-1 space-y-3 overflow-y-auto p-2">
+<!-- Task Card 1 -->
+<div class="w-full @container">
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-card-light dark:bg-card-dark shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
+<p class="text-sm font-bold leading-tight tracking-[-0.015em] text-text-main-light dark:text-text-main-dark">Finalizar protótipo da tela inicial</p>
+<p class="text-sm font-normal leading-normal text-text-secondary-light dark:text-text-secondary-dark">Adicionar componentes de navegação e rodapé.</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/40 dark:text-red-300">
+<span class="material-symbols-outlined !text-[14px]">flag</span>
+<span>Alta</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined !text-[14px]">calendar_today</span>
+<span>Amanhã</span>
+</div>
+</div>
+<div class="h-6 w-6 rounded-full bg-slate-300 dark:bg-slate-600" data-alt="User avatar"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Card 2 -->
+<div class="w-full @container">
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-card-light dark:bg-card-dark shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
+<p class="text-sm font-bold leading-tight tracking-[-0.015em] text-text-main-light dark:text-text-main-dark">Revisar feedback do cliente</p>
+<p class="text-sm font-normal leading-normal text-text-secondary-light dark:text-text-secondary-dark">Analisar os pontos levantados na última reunião.</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">
+<span class="material-symbols-outlined !text-[14px]">flag</span>
+<span>Média</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-symbols-outlined !text-[14px]">calendar_today</span>
+<span>Em 3 dias</span>
+</div>
+</div>
+<div class="h-6 w-6 rounded-full bg-slate-300 dark:bg-slate-600" data-alt="User avatar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Em andamento -->
+<div class="flex w-80 shrink-0 flex-col rounded-xl bg-column-light dark:bg-column-dark">
+<h2 class="px-4 pb-2 pt-4 text-base font-bold leading-tight tracking-[-0.015em]">Em andamento (1)</h2>
+<div class="flex-1 space-y-3 overflow-y-auto p-2">
+<!-- Task Card 3 -->
+<div class="w-full @container">
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-card-light dark:bg-card-dark shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="h-28 w-full rounded-t-lg bg-cover bg-center" data-alt="Laptop with design software open on a desk." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVlSn9T2BtW6YdjxsuH09kAYY8Inday_T2Kj6peRnreyXCv6E-P3k_l3pu_mvtN0PL8GvUPaYABLiBus2J3PXTj6csA8Ri344ja_FYMhnyxEGnYA-o9-DddBlsKsc7GVMKt9EDQwR__MTQ4QELn74DhbVYBAWeGkipvzaAx01wHtrbnvz91koPt4hcFJT8kcLnJkIvafMwhaSWxVt1LcEVsU3ulo6UlRux2w1cYclsNNxmjzahjJMXoz36lvnS-rzbdWK-_RVkvq27');"></div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
+<p class="text-sm font-bold leading-tight tracking-[-0.015em] text-text-main-light dark:text-text-main-dark">Desenvolver a UI da página de login</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/40 dark:text-red-300">
+<span class="material-symbols-outlined !text-[14px]">flag</span>
+<span>Alta</span>
+</div>
+</div>
+<div class="flex -space-x-2">
+<div class="h-6 w-6 rounded-full border-2 border-card-light dark:border-card-dark bg-slate-300 dark:bg-slate-600" data-alt="User avatar"></div>
+<div class="h-6 w-6 rounded-full border-2 border-card-light dark:border-card-dark bg-cyan-300 dark:bg-cyan-600" data-alt="User avatar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Concluído -->
+<div class="flex w-80 shrink-0 flex-col rounded-xl bg-column-light dark:bg-column-dark">
+<h2 class="px-4 pb-2 pt-4 text-base font-bold leading-tight tracking-[-0.015em]">Concluído (1)</h2>
+<div class="flex-1 space-y-3 overflow-y-auto p-2">
+<!-- Task Card 4 -->
+<div class="w-full @container">
+<div class="flex flex-col items-stretch justify-start rounded-lg bg-card-light dark:bg-card-dark shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
+<p class="text-sm font-bold leading-tight tracking-[-0.015em] text-text-main-light dark:text-text-main-dark">Configurar o ambiente de desenvolvimento</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/40 dark:text-green-300">
+<span class="material-symbols-outlined !text-[14px]">flag</span>
+<span>Baixa</span>
+</div>
+</div>
+<div class="h-6 w-6 rounded-full bg-slate-300 dark:bg-slate-600" data-alt="User avatar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add new column button -->
+<div class="flex w-80 shrink-0 items-center justify-center">
+<button class="flex w-full items-center justify-center gap-2 rounded-xl bg-white/20 dark:bg-white/10 p-4 text-text-secondary-light dark:text-text-secondary-dark hover:bg-white/30 dark:hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined">add</span>
+<span>Adicionar outra lista</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="absolute bottom-6 right-6">
+<button class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:bg-primary/90">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</div>
+</body></html>

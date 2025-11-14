@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalhes da Tarefa</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13c8ec",
+            "background-light": "#f6f8f8",
+            "background-dark": "#101f22",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-10 flex h-16 items-center border-b border-zinc-200 dark:border-zinc-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm px-4">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full text-zinc-700 dark:text-zinc-300">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-bold text-zinc-900 dark:text-zinc-100">Detalhes da Tarefa</h1>
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full text-zinc-700 dark:text-zinc-300">
+<span class="material-symbols-outlined text-2xl">more_vert</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 pb-28">
+<div class="p-4 space-y-6">
+<!-- Title and Description -->
+<div class="space-y-4">
+<label class="flex flex-col">
+<p class="text-sm font-medium text-zinc-600 dark:text-zinc-400 pb-2">Título da Tarefa</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-zinc-100 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-background-light dark:bg-background-dark h-14 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 p-4 text-base font-normal" value="Revisar o design do novo dashboard"/>
+</label>
+<label class="flex flex-col">
+<p class="text-sm font-medium text-zinc-600 dark:text-zinc-400 pb-2">Descrição</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-zinc-100 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-background-light dark:bg-background-dark min-h-36 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 p-4 text-base font-normal">Analisar a usabilidade, consistência visual e garantir que todos os componentes estejam alinhados com o novo guia de estilo da marca.</textarea>
+</label>
+</div>
+<!-- Metadata Section -->
+<div class="space-y-1">
+<button class="flex w-full items-center gap-4 rounded-lg px-4 py-3.5 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800/50">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl">calendar_today</span>
+</div>
+<div class="flex-1">
+<p class="text-base font-medium text-zinc-900 dark:text-zinc-100">Data de Vencimento</p>
+<p class="text-sm text-zinc-500 dark:text-zinc-400">31 de Dezembro</p>
+</div>
+<span class="material-symbols-outlined text-zinc-400 dark:text-zinc-500">chevron_right</span>
+</button>
+</div>
+<!-- Priority Section -->
+<div>
+<h3 class="px-4 pb-2 pt-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">Prioridade</h3>
+<div class="grid grid-cols-3 gap-2">
+<button class="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent px-4 py-3 text-zinc-700 dark:text-zinc-300 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">
+<span class="size-2.5 rounded-full bg-green-500"></span> Baixa
+            </button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent px-4 py-3 text-zinc-700 dark:text-zinc-300 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800">
+<span class="size-2.5 rounded-full bg-orange-500"></span> Média
+            </button>
+<button class="flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary/20 px-4 py-3 font-semibold text-primary">
+<span class="size-2.5 rounded-full bg-red-500"></span> Alta
+            </button>
+</div>
+</div>
+<!-- Attachments Section -->
+<div>
+<h3 class="px-4 pb-2 pt-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">Anexos</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-background-light dark:bg-background-dark p-3">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl">image</span>
+</div>
+<div class="flex-1 truncate">
+<p class="truncate text-sm font-medium text-zinc-900 dark:text-zinc-100">dashboard_mockup_v3.png</p>
+<p class="text-xs text-zinc-500 dark:text-zinc-400">2.1 MB</p>
+</div>
+<button class="flex size-8 shrink-0 items-center justify-center rounded-full text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+<span class="material-symbols-outlined text-xl">more_horiz</span>
+</button>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-zinc-300 dark:border-zinc-700 py-4 text-zinc-500 dark:text-zinc-400 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-xl">add</span>
+<span class="text-sm font-semibold">Adicionar Anexo</span>
+</button>
+</div>
+</div>
+<!-- Comments Section -->
+<div>
+<h3 class="px-4 pb-2 pt-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">Comentários</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<img class="size-9 rounded-full object-cover" data-alt="User avatar 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh0Onf_GFl2mfKNbY2u4lyQriTeuMPWm-UoJQLkAnLYo96vhg9w0M7rMyQAucVqvHm-G7yPbamRkP7Y51IK5nJggaLmjQBumzztk2OSvyOhKuKkrUhgu20LQgLfPO8GdANOe-EQyFQnYQIW5IZhynJ4YieiB1r_MeGmRg2kr1ugvMLr0PDEhQiBi5xbIvAzvRxsOl4HOXZMYwT7FEh3dbtgm5dPETSUpGznEuMBG1aADuwPeZKrfHfL0c_AXlt9pzKprylYebnvm-9"/>
+<div class="flex-1 rounded-lg rounded-tl-none border border-zinc-200 dark:border-zinc-700 bg-background-light dark:bg-background-dark p-3">
+<div class="flex items-center justify-between">
+<p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Alex Johnson</p>
+<p class="text-xs text-zinc-400 dark:text-zinc-500">2h atrás</p>
+</div>
+<p class="pt-1 text-sm text-zinc-700 dark:text-zinc-300">Ótima iniciativa! O anexo parece bom. Alguma ideia sobre a paleta de cores para os gráficos?</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<img class="size-9 rounded-full object-cover" data-alt="User avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw1UHHfgsKnlt-xEZ_cGiXvbGpuUnkQNhsJqU2BnST3YFRVbbtuUfcpFgNTt2Vo_7D87Bo5t2uD-0iX74L6466sNLVWj_YtJvNJBzJMrQTcehq8tfb2NeDs6Zyk8Jd6OFbVTLkwYxhWUdf3S9YueiUPygyIuk1dyhZq1xZQ4zZmf9uLWDjrbgm6W2sbg4UxfqAQa3b9asC5qLMRUiUQzkyMIbVCW5ZKyixboT_mM7zn3a6slPB5VwgWrXxdyEc104599jGss25VEhi"/>
+<div class="flex-1 rounded-lg rounded-tl-none border border-zinc-200 dark:border-zinc-700 bg-background-light dark:bg-background-dark p-3">
+<div class="flex items-center justify-between">
+<p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Maria Garcia</p>
+<p class="text-xs text-zinc-400 dark:text-zinc-500">1h atrás</p>
+</div>
+<p class="pt-1 text-sm text-zinc-700 dark:text-zinc-300">Concordo, Alex. Talvez possamos usar os gradientes da nossa marca principal para os gráficos de dados.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar & Comment Input -->
+<footer class="fixed bottom-0 left-0 right-0 z-10 border-t border-zinc-200 dark:border-zinc-800 bg-background-light dark:bg-background-dark p-2">
+<div class="mx-auto max-w-xl">
+<div class="relative flex items-center">
+<input class="form-input w-full rounded-full border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 py-3 pl-4 pr-12 text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Adicionar um comentário..."/>
+<button class="absolute right-1.5 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-primary text-white transition-opacity hover:opacity-90">
+<span class="material-symbols-outlined text-xl">send</span>
+</button>
+</div>
+</div>
+</footer>
+</div>
+</body></html>
