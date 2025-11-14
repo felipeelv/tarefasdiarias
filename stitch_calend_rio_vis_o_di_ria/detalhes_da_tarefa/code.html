@@ -152,4 +152,186 @@
 </div>
 </footer>
 </div>
+<script src="../app.js"></script>
+<script>
+// Funcionalidades da tela de detalhes
+document.addEventListener('DOMContentLoaded', () => {
+  const taskId = localStorage.getItem('selectedTaskId');
+  if (!taskId) {
+    window.navigateTo('calendar');
+    return;
+  }
+
+  const task = taskManager.tasks.find(t => t.id === taskId);
+  if (!task) {
+    window.navigateTo('calendar');
+    return;
+  }
+
+  const detailView = {
+    task: task,
+    
+    init() {
+      this.loadTaskData();
+      this.setupEventListeners();
+      this.renderComments();
+    },
+
+    loadTaskData() {
+      // Preencher campos
+      const titleInput = document.querySelector('input[value*="Revisar"]');
+      if (titleInput) {
+        titleInput.value = this.task.title;
+        titleInput.addEventListener('input', (e) => {
+          taskManager.updateTask(this.task.id, { title: e.target.value });
+        });
+      }
+
+      const descTextarea = document.querySelector('textarea');
+      if (descTextarea) {
+        descTextarea.value = this.task.description || '';
+        descTextarea.addEventListener('input', (e) => {
+          taskManager.updateTask(this.task.id, { description: e.target.value });
+        });
+      }
+
+      // Data de vencimento
+      const allButtons = document.querySelectorAll('button');
+      allButtons.forEach(btn => {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon && icon.textContent === 'calendar_today') {
+          const dateText = btn.querySelector('p.text-sm');
+          if (dateText) {
+            const date = new Date(this.task.date);
+            dateText.textContent = date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' });
+          }
+        }
+      });
+
+      // Prioridade
+      const priorityButtons = document.querySelectorAll('.grid.grid-cols-3 button');
+      priorityButtons.forEach(btn => {
+        const text = btn.textContent.trim();
+        if (text.includes('Alta') && this.task.priority === 'alta') {
+          btn.classList.add('border-2', 'border-primary', 'bg-primary/20', 'font-semibold', 'text-primary');
+        } else if (text.includes('Média') && this.task.priority === 'média') {
+          btn.classList.add('border-2', 'border-primary', 'bg-primary/20', 'font-semibold', 'text-primary');
+        } else if (text.includes('Baixa') && this.task.priority === 'baixa') {
+          btn.classList.add('border-2', 'border-primary', 'bg-primary/20', 'font-semibold', 'text-primary');
+        }
+        
+        btn.addEventListener('click', () => {
+          priorityButtons.forEach(b => {
+            b.classList.remove('border-2', 'border-primary', 'bg-primary/20', 'font-semibold', 'text-primary');
+            b.classList.add('border', 'bg-transparent');
+          });
+          btn.classList.add('border-2', 'border-primary', 'bg-primary/20', 'font-semibold', 'text-primary');
+          
+          let priority = 'média';
+          if (btn.textContent.includes('Alta')) priority = 'alta';
+          else if (btn.textContent.includes('Baixa')) priority = 'baixa';
+          
+          taskManager.updateTask(this.task.id, { priority });
+        });
+      });
+    },
+
+    setupEventListeners() {
+      // Botão voltar
+      const headerButtons = document.querySelectorAll('header button');
+      headerButtons.forEach(btn => {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon && icon.textContent === 'arrow_back') {
+          btn.addEventListener('click', () => {
+            window.history.back();
+          });
+        } else if (icon && icon.textContent === 'more_vert') {
+          btn.addEventListener('click', () => {
+            if (confirm('Deseja excluir esta tarefa?')) {
+              taskManager.deleteTask(this.task.id);
+              window.history.back();
+            }
+          });
+        }
+      });
+
+      // Adicionar comentário
+      const commentInput = document.querySelector('input[placeholder*="comentário"]');
+      const footerButtons = document.querySelectorAll('footer button');
+      let sendBtn = null;
+      footerButtons.forEach(btn => {
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon && icon.textContent === 'send') {
+          sendBtn = btn;
+        }
+      });
+      
+      if (sendBtn && commentInput) {
+        sendBtn.addEventListener('click', () => {
+          const text = commentInput.value.trim();
+          if (text) {
+            if (!this.task.comments) this.task.comments = [];
+            this.task.comments.push({
+              id: Date.now().toString(),
+              author: 'Você',
+              text: text,
+              time: 'Agora'
+            });
+            taskManager.updateTask(this.task.id, { comments: this.task.comments });
+            commentInput.value = '';
+            this.renderComments();
+          }
+        });
+
+        commentInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            sendBtn.click();
+          }
+        });
+      }
+
+      // Adicionar anexo
+      const allButtonsForAttachment = document.querySelectorAll('button');
+      allButtonsForAttachment.forEach(btn => {
+        const span = btn.querySelector('span');
+        if (span && span.textContent.includes('Adicionar Anexo')) {
+          btn.addEventListener('click', () => {
+            alert('Funcionalidade de anexo em desenvolvimento');
+          });
+        }
+      });
+    },
+
+    renderComments() {
+      const commentsContainer = document.querySelector('.space-y-4');
+      if (!commentsContainer || !this.task.comments) return;
+
+      // Limpar comentários existentes (manter estrutura)
+      const existingComments = commentsContainer.querySelectorAll('.flex.items-start.gap-3');
+      existingComments.forEach(c => c.remove());
+
+      // Renderizar comentários
+      this.task.comments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.className = 'flex items-start gap-3';
+        commentDiv.innerHTML = `
+          <div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center">
+            <span class="text-primary text-sm font-semibold">${comment.author.charAt(0)}</span>
+          </div>
+          <div class="flex-1 rounded-lg rounded-tl-none border border-zinc-200 dark:border-zinc-700 bg-background-light dark:bg-background-dark p-3">
+            <div class="flex items-center justify-between">
+              <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">${comment.author}</p>
+              <p class="text-xs text-zinc-400 dark:text-zinc-500">${comment.time}</p>
+            </div>
+            <p class="pt-1 text-sm text-zinc-700 dark:text-zinc-300">${comment.text}</p>
+          </div>
+        `;
+        commentsContainer.appendChild(commentDiv);
+      });
+    }
+  };
+
+  detailView.init();
+});
+</script>
 </body></html>

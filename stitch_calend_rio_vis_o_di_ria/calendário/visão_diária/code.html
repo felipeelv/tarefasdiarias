@@ -197,8 +197,252 @@
 </div>
 </main>
 <!-- Floating Action Button (FAB) -->
-<button class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg">
+<button class="fab-add-task fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg">
 <span class="material-symbols-outlined" style="font-size: 28px;">add</span>
 </button>
 </div>
+<script src="../../app.js"></script>
+<script>
+// Funcionalidades específicas da visão diária
+document.addEventListener('DOMContentLoaded', () => {
+  const calendarView = {
+    currentMonth: new Date().getMonth(),
+    currentYear: new Date().getFullYear(),
+    selectedDate: new Date(),
+
+    init() {
+      this.renderCalendar();
+      this.setupEventListeners();
+      this.renderTasks();
+    },
+
+    setupEventListeners() {
+      // Navegação do calendário (botões de seta)
+      const navButtons = document.querySelectorAll('header + div + div button');
+      navButtons.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) {
+            if (icon.textContent === 'chevron_right') {
+              this.currentMonth++;
+              if (this.currentMonth > 11) {
+                this.currentMonth = 0;
+                this.currentYear++;
+              }
+            } else if (icon.textContent === 'chevron_left') {
+              this.currentMonth--;
+              if (this.currentMonth < 0) {
+                this.currentMonth = 11;
+                this.currentYear--;
+              }
+            }
+            this.renderCalendar();
+          }
+        });
+      });
+
+      // Filtros de categoria
+      const filterButtons = document.querySelectorAll('.flex.gap-3 button');
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.querySelector('p')?.textContent.trim();
+          const category = text === 'Todas as Listas' ? 'all' : text;
+          taskManager.filterCategory = category;
+          
+          // Atualizar visual dos botões
+          filterButtons.forEach(b => {
+            const p = b.querySelector('p');
+            if (p) {
+              if (category === 'all' && text === 'Todas as Listas') {
+                b.classList.add('bg-primary/20');
+                b.classList.remove('bg-gray-200/60', 'dark:bg-gray-800/60');
+                p.classList.add('text-primary');
+                p.classList.remove('text-gray-800', 'dark:text-gray-200');
+              } else if (p.textContent.trim() === text && text !== 'Todas as Listas') {
+                b.classList.add('bg-primary/20');
+                b.classList.remove('bg-gray-200/60', 'dark:bg-gray-800/60');
+                p.classList.add('text-primary');
+                p.classList.remove('text-gray-800', 'dark:text-gray-200');
+              } else {
+                b.classList.remove('bg-primary/20');
+                b.classList.add('bg-gray-200/60', 'dark:bg-gray-800/60');
+                p.classList.remove('text-primary');
+                p.classList.add('text-gray-800', 'dark:text-gray-200');
+              }
+            }
+          });
+          
+          this.renderTasks();
+        });
+      });
+
+      // Botões de visualização (lista/calendário)
+      const viewButtons = document.querySelectorAll('.flex.items-center.justify-center.gap-2 button');
+      viewButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) {
+            if (icon.textContent === 'view_list') {
+              window.navigateTo('tasks');
+            } else if (icon.textContent === 'calendar_month') {
+              window.navigateTo('calendar');
+            }
+          }
+        });
+      });
+
+      // Menu hamburger
+      const menuBtn = document.querySelector('header > div:first-child');
+      if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+          window.navigateTo('settings');
+        });
+      }
+
+      // Busca
+      const searchBtn = document.querySelector('button:has(.material-symbols-outlined)');
+      if (searchBtn && searchBtn.querySelector('.material-symbols-outlined')?.textContent === 'search') {
+        searchBtn.addEventListener('click', () => {
+          alert('Funcionalidade de busca em desenvolvimento');
+        });
+      }
+
+      // Marcar tarefa como concluída
+      document.addEventListener('click', (e) => {
+        const checkbox = e.target.closest('button.task-checkbox');
+        if (checkbox) {
+          const taskCard = checkbox.closest('[data-task-id]');
+          const taskId = taskCard?.getAttribute('data-task-id');
+          if (taskId) {
+            taskManager.toggleTaskComplete(taskId);
+          }
+        }
+      });
+    },
+
+    renderCalendar() {
+      const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+      const monthElement = document.querySelector('main > div > div > p.text-gray-800');
+      if (monthElement) {
+        monthElement.textContent = `${monthNames[this.currentMonth]} ${this.currentYear}`;
+      }
+
+      const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+      const today = new Date();
+      const selectedDateStr = this.selectedDate.toDateString();
+
+      const calendarGrid = document.querySelector('.grid.grid-cols-7');
+      if (!calendarGrid) return;
+
+      // Limpar dias (manter cabeçalho)
+      const dayButtons = calendarGrid.querySelectorAll('button');
+      dayButtons.forEach(btn => btn.remove());
+
+      // Adicionar dias vazios no início
+      for (let i = 0; i < firstDay; i++) {
+        const emptyBtn = document.createElement('button');
+        emptyBtn.className = 'h-12 w-full text-gray-400 dark:text-gray-600 text-sm font-medium leading-normal';
+        emptyBtn.innerHTML = '<div class="flex size-full items-center justify-center rounded-full"></div>';
+        calendarGrid.appendChild(emptyBtn);
+      }
+
+      // Adicionar dias do mês
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(this.currentYear, this.currentMonth, day);
+        const dateStr = date.toDateString();
+        const isToday = dateStr === today.toDateString();
+        const isSelected = dateStr === selectedDateStr;
+        
+        const tasksOnDay = taskManager.getTasksByDate(date);
+        const hasTasks = tasksOnDay.length > 0;
+
+        const btn = document.createElement('button');
+        btn.className = `h-12 w-full text-sm font-medium leading-normal relative ${isSelected ? 'text-white' : 'text-gray-800 dark:text-gray-200'}`;
+        btn.setAttribute('data-date', date.toISOString());
+        
+        let dotHtml = '';
+        if (hasTasks) {
+          const priorities = tasksOnDay.map(t => t.priority);
+          const hasHigh = priorities.includes('alta');
+          const hasMedium = priorities.includes('média');
+          const color = hasHigh ? 'bg-red-400' : hasMedium ? 'bg-yellow-400' : 'bg-green-400';
+          dotHtml = `<div class="absolute bottom-2 left-1/2 -translate-x-1/2 h-1.5 w-1.5 rounded-full ${color}"></div>`;
+        }
+
+        btn.innerHTML = `
+          <div class="flex size-full items-center justify-center rounded-full ${isSelected ? 'bg-primary' : ''}">
+            ${day}
+          </div>
+          ${dotHtml}
+        `;
+
+        btn.addEventListener('click', () => {
+          this.selectedDate = date;
+          this.renderCalendar();
+          this.renderTasks();
+        });
+
+        calendarGrid.appendChild(btn);
+      }
+    },
+
+    renderTasks() {
+      const tasksContainer = document.querySelector('main > div.flex.flex-col.gap-3');
+      if (!tasksContainer) return;
+
+      // Remover tarefas existentes (exceto o título)
+      const title = tasksContainer.querySelector('h3');
+      tasksContainer.innerHTML = '';
+      if (title) tasksContainer.appendChild(title);
+
+      // Atualizar título com data selecionada
+      const dateStr = this.selectedDate.toLocaleDateString('pt-BR', { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long' 
+      });
+      if (title) {
+        title.textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+      }
+
+      // Filtrar tarefas
+      let tasks = taskManager.getTasksByDate(this.selectedDate);
+      if (taskManager.filterCategory !== 'all') {
+        tasks = tasks.filter(t => t.category === taskManager.filterCategory);
+      }
+
+      // Renderizar tarefas
+      tasks.forEach(task => {
+        const taskCard = document.createElement('div');
+        taskCard.className = `flex items-start gap-4 rounded-xl bg-white dark:bg-gray-800 p-4 shadow-sm ${task.completed ? 'opacity-60' : ''}`;
+        taskCard.setAttribute('data-task-id', task.id);
+        
+        const categoryColors = {
+          'Trabalho': 'text-blue-800 bg-blue-100 dark:bg-blue-900/50 dark:text-blue-300',
+          'Pessoal': 'text-green-800 bg-green-100 dark:bg-green-900/50 dark:text-green-300',
+          'Estudos': 'text-purple-800 bg-purple-100 dark:bg-purple-900/50 dark:text-purple-300'
+        };
+
+        taskCard.innerHTML = `
+          <button class="task-checkbox mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 ${task.completed ? 'border-gray-400 bg-gray-400' : 'border-primary'}">
+            <span class="material-symbols-outlined text-white text-base ${task.completed ? '' : 'hidden'}">check</span>
+          </button>
+          <div class="flex flex-col gap-1 flex-1 cursor-pointer" onclick="window.navigateTo('task-detail'); localStorage.setItem('selectedTaskId', '${task.id}');">
+            <p class="text-gray-800 dark:text-gray-100 font-medium ${task.completed ? 'line-through' : ''}">${task.title}</p>
+            ${task.time ? `<p class="text-gray-500 dark:text-gray-400 text-sm ${task.completed ? 'line-through' : ''}">${task.time}</p>` : ''}
+            <div class="flex pt-1">
+              <span class="text-xs font-medium ${categoryColors[task.category] || categoryColors['Trabalho']} px-2 py-0.5 rounded-full">${task.category}</span>
+            </div>
+          </div>
+        `;
+        tasksContainer.appendChild(taskCard);
+      });
+    }
+  };
+
+  calendarView.init();
+});
+</script>
 </body></html>

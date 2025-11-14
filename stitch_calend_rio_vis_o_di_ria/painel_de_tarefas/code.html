@@ -153,9 +153,210 @@
 </main>
 <!-- Floating Action Button -->
 <div class="absolute bottom-6 right-6">
-<button class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:bg-primary/90">
+<button class="fab-add-task flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-lg transition hover:bg-primary/90">
 <span class="material-symbols-outlined text-3xl">add</span>
 </button>
 </div>
 </div>
+<script src="../app.js"></script>
+<script>
+// Funcionalidades do painel Kanban
+document.addEventListener('DOMContentLoaded', () => {
+  const kanbanView = {
+    init() {
+      this.renderTasks();
+      this.setupEventListeners();
+      this.setupDragAndDrop();
+    },
+
+    setupEventListeners() {
+      // Botões de busca e notificações
+      document.querySelectorAll('header button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon?.textContent === 'search') {
+            alert('Funcionalidade de busca em desenvolvimento');
+          } else if (icon?.textContent === 'notifications') {
+            alert('Notificações');
+          }
+        });
+      });
+
+      // Adicionar nova coluna
+      const allButtons = document.querySelectorAll('button');
+      allButtons.forEach(btn => {
+        const span = btn.querySelector('span');
+        if (span && span.textContent.includes('Adicionar outra lista')) {
+          btn.addEventListener('click', () => {
+            const name = prompt('Nome da nova lista:');
+            if (name) {
+              alert('Funcionalidade de adicionar coluna em desenvolvimento');
+            }
+          });
+        }
+      });
+    },
+
+    setupDragAndDrop() {
+      // Implementação básica de drag and drop
+      let draggedElement = null;
+
+      document.addEventListener('dragstart', (e) => {
+        if (e.target.closest('[data-task-id]')) {
+          draggedElement = e.target.closest('[data-task-id]');
+          e.dataTransfer.effectAllowed = 'move';
+        }
+      });
+
+      document.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const column = e.target.closest('.flex.w-80');
+        if (column) {
+          e.dataTransfer.dropEffect = 'move';
+        }
+      });
+
+      document.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (!draggedElement) return;
+
+        const column = e.target.closest('.flex.w-80');
+        if (column) {
+          const status = column.querySelector('h2')?.textContent;
+          let newStatus = 'todo';
+          if (status?.includes('andamento')) newStatus = 'in-progress';
+          else if (status?.includes('Concluído')) newStatus = 'done';
+
+          const taskId = draggedElement.getAttribute('data-task-id');
+          if (taskId) {
+            taskManager.updateTask(taskId, { status: newStatus });
+            this.renderTasks();
+          }
+        }
+        draggedElement = null;
+      });
+    },
+
+    renderTasks() {
+      // Encontrar colunas pelos títulos
+      const allColumns = document.querySelectorAll('.flex.w-80.shrink-0');
+      const columns = {};
+      
+      allColumns.forEach(col => {
+        const header = col.querySelector('h2');
+        if (header) {
+          const text = header.textContent;
+          if (text.includes('A fazer')) {
+            columns.todo = col.querySelector('.space-y-3');
+            columns.todoHeader = header;
+          } else if (text.includes('Em andamento')) {
+            columns['in-progress'] = col.querySelector('.space-y-3');
+            columns.inProgressHeader = header;
+          } else if (text.includes('Concluído')) {
+            columns.done = col.querySelector('.space-y-3');
+            columns.doneHeader = header;
+          }
+        }
+      });
+
+      // Limpar todas as colunas
+      if (columns.todo) columns.todo.innerHTML = '';
+      if (columns['in-progress']) columns['in-progress'].innerHTML = '';
+      if (columns.done) columns.done.innerHTML = '';
+
+      // Renderizar tarefas por status
+      ['todo', 'in-progress', 'done'].forEach(status => {
+        const tasks = taskManager.getTasksByStatus(status);
+        const column = columns[status];
+        if (!column) return;
+
+        // Atualizar contador
+        const headerMap = {
+          'todo': columns.todoHeader,
+          'in-progress': columns.inProgressHeader,
+          'done': columns.doneHeader
+        };
+        const header = headerMap[status];
+        if (header) {
+          const match = header.textContent.match(/^(.+?)\s*\(/);
+          if (match) {
+            header.textContent = `${match[1]} (${tasks.length})`;
+          } else {
+            const labels = {
+              'todo': 'A fazer',
+              'in-progress': 'Em andamento',
+              'done': 'Concluído'
+            };
+            header.textContent = `${labels[status]} (${tasks.length})`;
+          }
+        }
+
+        tasks.forEach(task => {
+          const taskCard = this.createTaskCard(task);
+          taskCard.setAttribute('draggable', 'true');
+          column.appendChild(taskCard);
+        });
+      });
+    },
+
+    createTaskCard(task) {
+      const card = document.createElement('div');
+      card.className = 'w-full @container';
+      card.setAttribute('data-task-id', task.id);
+
+      const priorityColors = {
+        'alta': 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300',
+        'média': 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:bg-amber-300',
+        'baixa': 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
+      };
+
+      const priorityLabels = {
+        'alta': 'Alta',
+        'média': 'Média',
+        'baixa': 'Baixa'
+      };
+
+      const date = new Date(task.date);
+      const today = new Date();
+      const diffTime = date - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      let dateText = '';
+      if (diffDays === 0) dateText = 'Hoje';
+      else if (diffDays === 1) dateText = 'Amanhã';
+      else if (diffDays > 1) dateText = `Em ${diffDays} dias`;
+      else if (diffDays === -1) dateText = 'Ontem';
+      else dateText = `${Math.abs(diffDays)} dias atrás`;
+
+      card.innerHTML = `
+        <div class="flex flex-col items-stretch justify-start rounded-lg bg-card-light dark:bg-card-dark shadow-[0_1px_3px_rgba(0,0,0,0.05)] cursor-pointer" onclick="window.navigateTo('task-detail'); localStorage.setItem('selectedTaskId', '${task.id}');">
+          ${task.image ? `<div class="h-28 w-full rounded-t-lg bg-cover bg-center" style="background-image: url('${task.image}');"></div>` : ''}
+          <div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
+            <p class="text-sm font-bold leading-tight tracking-[-0.015em] text-text-main-light dark:text-text-main-dark">${task.title}</p>
+            ${task.description ? `<p class="text-sm font-normal leading-normal text-text-secondary-light dark:text-text-secondary-dark">${task.description}</p>` : ''}
+            <div class="mt-2 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1 rounded-full ${priorityColors[task.priority] || priorityColors['média']} px-2 py-0.5 text-xs font-medium">
+                  <span class="material-symbols-outlined !text-[14px]">flag</span>
+                  <span>${priorityLabels[task.priority] || 'Média'}</span>
+                </div>
+                ${dateText ? `
+                <div class="flex items-center gap-1 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                  <span class="material-symbols-outlined !text-[14px]">calendar_today</span>
+                  <span>${dateText}</span>
+                </div>
+                ` : ''}
+              </div>
+              <div class="h-6 w-6 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+  };
+
+  kanbanView.init();
+});
+</script>
 </body></html>

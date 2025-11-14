@@ -234,4 +234,96 @@
 </div>
 </main>
 </div>
+<script src="../app.js"></script>
+<script>
+// Funcionalidades da tela de configurações
+document.addEventListener('DOMContentLoaded', () => {
+  const settingsView = {
+    init() {
+      this.setupDarkMode();
+      this.setupEventListeners();
+    },
+
+    setupDarkMode() {
+      // Encontrar o checkbox de modo escuro (o que está na seção Aparência)
+      const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+      allCheckboxes.forEach(checkbox => {
+        const parent = checkbox.closest('div');
+        const parentText = parent ? parent.textContent : '';
+        if (parentText.includes('Modo Escuro')) {
+          const isDark = localStorage.getItem('darkMode') === 'true';
+          checkbox.checked = isDark;
+          checkbox.setAttribute('data-dark-mode-toggle', 'true');
+          
+          // Atualizar visual do toggle
+          if (isDark) {
+            checkbox.classList.add('peer-checked');
+          }
+        }
+      });
+    },
+
+    setupEventListeners() {
+      // Botão voltar
+      const backBtn = document.querySelector('header button');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          window.history.back();
+        });
+      }
+
+      // Modo escuro
+      const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+      allCheckboxes.forEach(checkbox => {
+        const parent = checkbox.closest('div');
+        const parentText = parent ? parent.textContent : '';
+        if (parentText.includes('Modo Escuro')) {
+          checkbox.addEventListener('change', () => {
+            taskManager.toggleDarkMode();
+          });
+        }
+      });
+
+      // Botões de ação
+      const actionButtons = document.querySelectorAll('main button');
+      actionButtons.forEach(btn => {
+        const text = btn.textContent.trim();
+        if (text === 'Sair') {
+          btn.addEventListener('click', () => {
+            if (confirm('Deseja realmente sair?')) {
+              alert('Funcionalidade de logout em desenvolvimento');
+            }
+          });
+        } else if (text === 'Excluir Conta') {
+          btn.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) {
+              alert('Funcionalidade de exclusão de conta em desenvolvimento');
+            }
+          });
+        }
+      });
+
+      // Itens de menu
+      const menuItems = document.querySelectorAll('main > div > div');
+      menuItems.forEach(item => {
+        const text = item.textContent.trim();
+        if (text.includes('Gerenciar Perfil') || 
+            text.includes('Alterar Senha') || 
+            text.includes('Gerenciamento de Assinatura') ||
+            text.includes('Idioma') ||
+            text.includes('Ajuda') ||
+            text.includes('Política') ||
+            text.includes('Termos')) {
+          item.style.cursor = 'pointer';
+          item.addEventListener('click', () => {
+            alert(`Funcionalidade "${text}" em desenvolvimento`);
+          });
+        }
+      });
+    }
+  };
+
+  settingsView.init();
+});
+</script>
 </body></html>
